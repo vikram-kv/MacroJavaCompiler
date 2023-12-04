@@ -1,0 +1,2613 @@
+Nonterminals useless in grammar
+
+    IdentifierListNull
+    IdentifierList
+
+
+Rules useless in grammar
+
+   76 IdentifierListNull: %empty
+
+   77 IdentifierList: IdentifierListNonNull
+   78               | IdentifierListNull
+
+
+State 74 conflicts: 10 shift/reduce
+State 200 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Goal $end
+
+    1 Goal: MacroDefinitions MainClass TypeDeclarations
+
+    2 MacroDefinitions: %empty
+    3                 | MacroDefinitions MacroDefinition
+
+    4 TypeDeclarations: %empty
+    5                 | TypeDeclarations TypeDeclaration
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    7 MultiVarDeclaration: %empty
+    8                    | MultiVarDeclaration Type Identifier SEMI_COLON
+
+    9 MultiMethodDeclaration: %empty
+   10                       | MultiMethodDeclaration MethodDeclaration
+
+   11 TypeDeclaration: CLASS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+   12                | CLASS Identifier EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+   13 MethodArgNull: %empty
+
+   14 MethodArgNonNull: Type Identifier
+   15                 | MethodArgNonNull COMMA Type Identifier
+
+   16 MethodArg: MethodArgNull
+   17          | MethodArgNonNull
+
+   18 MultiStatement: %empty
+   19               | MultiStatement Statement
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+   21 MethodBody: MultiVarDeclaration
+   22           | MultiVarDeclaration Statement MultiStatement
+
+   23 Type: INT OPEN_SQR_BKT CLOSE_SQR_BKT
+   24     | BOOLEAN
+   25     | INT
+   26     | Identifier
+
+   27 ExprListNull: %empty
+
+   28 ExprListNonNull: Expression
+   29                | ExprListNonNull COMMA Expression
+
+   30 ExprList: ExprListNull
+   31         | ExprListNonNull
+
+   32 Statement: OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+   33          | PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON
+   34          | Identifier EQ Expression SEMI_COLON
+   35          | Identifier OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ Expression SEMI_COLON
+   36          | IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement
+   37          | IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement ELSE Statement
+   38          | WHILE OPEN_RND_BKT Expression CLOSE_RND_BKT Statement
+   39          | Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT SEMI_COLON
+
+   40 Expression: PrimaryExpression LAND PrimaryExpression
+   41           | PrimaryExpression LOR PrimaryExpression
+   42           | PrimaryExpression NEQ PrimaryExpression
+   43           | PrimaryExpression LTE PrimaryExpression
+   44           | PrimaryExpression PLUS PrimaryExpression
+   45           | PrimaryExpression MINUS PrimaryExpression
+   46           | PrimaryExpression MUL PrimaryExpression
+   47           | PrimaryExpression DIV PrimaryExpression
+   48           | PrimaryExpression OPEN_SQR_BKT PrimaryExpression CLOSE_SQR_BKT
+   49           | PrimaryExpression DOT LENGTH
+   50           | PrimaryExpression
+   51           | PrimaryExpression DOT Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT
+   52           | Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT
+
+   53 PrimaryExpression: Integer
+   54                  | TRUE
+   55                  | FALSE
+   56                  | Identifier
+   57                  | THIS
+   58                  | NEW INT OPEN_SQR_BKT Expression CLOSE_SQR_BKT
+   59                  | NEW Identifier OPEN_RND_BKT CLOSE_RND_BKT
+   60                  | NOT Expression
+   61                  | OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+   62 IdentifierListNonNull: Identifier
+   63                      | IdentifierListNonNull COMMA Identifier
+
+   64 MacroDefinition: MacroDefExpression
+   65                | MacroDefStatement
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+   67                  | DEF_STMT0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+   68                  | DEF_STMT1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+   69                  | DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+   71                   | DEF_EXPR0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+   72                   | DEF_EXPR1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+   73                   | DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+   74 Identifier: IDENTIFIER
+
+   75 Integer: INTEGER
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    CLASS <node> (258) 6 11 12
+    PUBLIC <node> (259) 6 20
+    STATIC <node> (260) 6
+    VOID <node> (261) 6
+    MAIN <node> (262) 6
+    STRING <node> (263) 6
+    PRINT <node> (264) 6 33
+    EXTENDS <node> (265) 12
+    RETURN <node> (266) 20
+    INT <node> (267) 23 25 58
+    BOOLEAN <node> (268) 24
+    IF <node> (269) 36 37
+    ELSE <node> (270) 37
+    WHILE <node> (271) 38
+    DEF_STMT (272) 66
+    DEF_STMT0 (273) 67
+    DEF_STMT1 (274) 68
+    DEF_STMT2 (275) 69
+    DEF_EXPR (276) 70
+    DEF_EXPR0 (277) 71
+    DEF_EXPR1 (278) 72
+    DEF_EXPR2 (279) 73
+    LENGTH <node> (280) 49
+    TRUE <node> (281) 54
+    FALSE <node> (282) 55
+    THIS <node> (283) 57
+    NEW <node> (284) 58 59
+    OPEN_CURL_BKT <node> (285) 6 11 12 20 32 66 67 68 69
+    CLOSE_CURL_BKT <node> (286) 6 11 12 20 32 66 67 68 69
+    OPEN_RND_BKT <node> (287) 6 20 33 36 37 38 39 51 52 59 61 66 67 68 69 70 71 72 73
+    CLOSE_RND_BKT <node> (288) 6 20 33 36 37 38 39 51 52 59 61 66 67 68 69 70 71 72 73
+    OPEN_SQR_BKT <node> (289) 6 23 35 48 58
+    CLOSE_SQR_BKT <node> (290) 6 23 35 48 58
+    COMMA <node> (291) 15 29 63 66 69 70 73
+    SEMI_COLON <node> (292) 6 8 20 33 34 35 39
+    DOT <node> (293) 49 51
+    EQ <node> (294) 34 35
+    LAND <node> (295) 40
+    LOR <node> (296) 41
+    NEQ <node> (297) 42
+    LTE <node> (298) 43
+    PLUS <node> (299) 44
+    MINUS <node> (300) 45
+    MUL <node> (301) 46
+    DIV <node> (302) 47
+    NOT <node> (303) 60
+    IDENTIFIER <node> (304) 74
+    INTEGER <node> (305) 75
+
+
+Nonterminals, with rules where they appear
+
+    $accept (51)
+        on left: 0
+    Goal <ival> (52)
+        on left: 1
+        on right: 0
+    MacroDefinitions <ival> (53)
+        on left: 2 3
+        on right: 1 3
+    TypeDeclarations <node> (54)
+        on left: 4 5
+        on right: 1 5
+    MainClass <node> (55)
+        on left: 6
+        on right: 1
+    MultiVarDeclaration <node> (56)
+        on left: 7 8
+        on right: 8 11 12 21 22
+    MultiMethodDeclaration <node> (57)
+        on left: 9 10
+        on right: 10 11 12
+    TypeDeclaration <node> (58)
+        on left: 11 12
+        on right: 5
+    MethodArgNull <node> (59)
+        on left: 13
+        on right: 16
+    MethodArgNonNull <node> (60)
+        on left: 14 15
+        on right: 15 17
+    MethodArg <node> (61)
+        on left: 16 17
+        on right: 20
+    MultiStatement <node> (62)
+        on left: 18 19
+        on right: 19 22 32 66 67 68 69
+    MethodDeclaration <node> (63)
+        on left: 20
+        on right: 10
+    MethodBody <node> (64)
+        on left: 21 22
+        on right: 20
+    Type <node> (65)
+        on left: 23 24 25 26
+        on right: 8 14 15 20
+    ExprListNull <node> (66)
+        on left: 27
+        on right: 30
+    ExprListNonNull <node> (67)
+        on left: 28 29
+        on right: 29 31
+    ExprList <node> (68)
+        on left: 30 31
+        on right: 39 51 52
+    Statement <node> (69)
+        on left: 32 33 34 35 36 37 38 39
+        on right: 19 22 36 37 38
+    Expression <node> (70)
+        on left: 40 41 42 43 44 45 46 47 48 49 50 51 52
+        on right: 6 20 28 29 33 34 35 36 37 38 58 60 61 70 71 72 73
+    PrimaryExpression <node> (71)
+        on left: 53 54 55 56 57 58 59 60 61
+        on right: 40 41 42 43 44 45 46 47 48 49 50 51
+    IdentifierListNonNull <node> (72)
+        on left: 62 63
+        on right: 63 66 70
+    MacroDefinition <ival> (73)
+        on left: 64 65
+        on right: 3
+    MacroDefStatement <ival> (74)
+        on left: 66 67 68 69
+        on right: 65
+    MacroDefExpression <ival> (75)
+        on left: 70 71 72 73
+        on right: 64
+    Identifier <node> (76)
+        on left: 74
+        on right: 6 8 11 12 14 15 20 26 34 35 39 51 52 56 59 62 63 66 67 68 69 70 71 72 73
+    Integer <node> (77)
+        on left: 75
+        on right: 53
+
+
+State 0
+
+    0 $accept: . Goal $end
+
+    $default  reduce using rule 2 (MacroDefinitions)
+
+    Goal              go to state 1
+    MacroDefinitions  go to state 2
+
+
+State 1
+
+    0 $accept: Goal . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    1 Goal: MacroDefinitions . MainClass TypeDeclarations
+    3 MacroDefinitions: MacroDefinitions . MacroDefinition
+
+    CLASS      shift, and go to state 4
+    DEF_STMT   shift, and go to state 5
+    DEF_STMT0  shift, and go to state 6
+    DEF_STMT1  shift, and go to state 7
+    DEF_STMT2  shift, and go to state 8
+    DEF_EXPR   shift, and go to state 9
+    DEF_EXPR0  shift, and go to state 10
+    DEF_EXPR1  shift, and go to state 11
+    DEF_EXPR2  shift, and go to state 12
+
+    MainClass           go to state 13
+    MacroDefinition     go to state 14
+    MacroDefStatement   go to state 15
+    MacroDefExpression  go to state 16
+
+
+State 3
+
+    0 $accept: Goal $end .
+
+    $default  accept
+
+
+State 4
+
+    6 MainClass: CLASS . Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 18
+
+
+State 5
+
+   66 MacroDefStatement: DEF_STMT . Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 19
+
+
+State 6
+
+   67 MacroDefStatement: DEF_STMT0 . Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 20
+
+
+State 7
+
+   68 MacroDefStatement: DEF_STMT1 . Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 21
+
+
+State 8
+
+   69 MacroDefStatement: DEF_STMT2 . Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 22
+
+
+State 9
+
+   70 MacroDefExpression: DEF_EXPR . Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 23
+
+
+State 10
+
+   71 MacroDefExpression: DEF_EXPR0 . Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 24
+
+
+State 11
+
+   72 MacroDefExpression: DEF_EXPR1 . Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 25
+
+
+State 12
+
+   73 MacroDefExpression: DEF_EXPR2 . Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 26
+
+
+State 13
+
+    1 Goal: MacroDefinitions MainClass . TypeDeclarations
+
+    $default  reduce using rule 4 (TypeDeclarations)
+
+    TypeDeclarations  go to state 27
+
+
+State 14
+
+    3 MacroDefinitions: MacroDefinitions MacroDefinition .
+
+    $default  reduce using rule 3 (MacroDefinitions)
+
+
+State 15
+
+   65 MacroDefinition: MacroDefStatement .
+
+    $default  reduce using rule 65 (MacroDefinition)
+
+
+State 16
+
+   64 MacroDefinition: MacroDefExpression .
+
+    $default  reduce using rule 64 (MacroDefinition)
+
+
+State 17
+
+   74 Identifier: IDENTIFIER .
+
+    $default  reduce using rule 74 (Identifier)
+
+
+State 18
+
+    6 MainClass: CLASS Identifier . OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 28
+
+
+State 19
+
+   66 MacroDefStatement: DEF_STMT Identifier . OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 29
+
+
+State 20
+
+   67 MacroDefStatement: DEF_STMT0 Identifier . OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 30
+
+
+State 21
+
+   68 MacroDefStatement: DEF_STMT1 Identifier . OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 31
+
+
+State 22
+
+   69 MacroDefStatement: DEF_STMT2 Identifier . OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 32
+
+
+State 23
+
+   70 MacroDefExpression: DEF_EXPR Identifier . OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 33
+
+
+State 24
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier . OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 34
+
+
+State 25
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier . OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 35
+
+
+State 26
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier . OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 36
+
+
+State 27
+
+    1 Goal: MacroDefinitions MainClass TypeDeclarations .
+    5 TypeDeclarations: TypeDeclarations . TypeDeclaration
+
+    CLASS  shift, and go to state 37
+
+    $default  reduce using rule 1 (Goal)
+
+    TypeDeclaration  go to state 38
+
+
+State 28
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT . PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    PUBLIC  shift, and go to state 39
+
+
+State 29
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT . Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 40
+
+
+State 30
+
+   67 MacroDefStatement: DEF_STMT0 Identifier OPEN_RND_BKT . CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 41
+
+
+State 31
+
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT . Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 42
+
+
+State 32
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT . Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 43
+
+
+State 33
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT . Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 44
+
+
+State 34
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier OPEN_RND_BKT . CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 45
+
+
+State 35
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT . Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 46
+
+
+State 36
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT . Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 47
+
+
+State 37
+
+   11 TypeDeclaration: CLASS . Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+   12                | CLASS . Identifier EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 48
+
+
+State 38
+
+    5 TypeDeclarations: TypeDeclarations TypeDeclaration .
+
+    $default  reduce using rule 5 (TypeDeclarations)
+
+
+State 39
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC . STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    STATIC  shift, and go to state 49
+
+
+State 40
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier . COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    COMMA  shift, and go to state 50
+
+
+State 41
+
+   67 MacroDefStatement: DEF_STMT0 Identifier OPEN_RND_BKT CLOSE_RND_BKT . OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 51
+
+
+State 42
+
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT Identifier . CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 52
+
+
+State 43
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier . COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    COMMA  shift, and go to state 53
+
+
+State 44
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier . COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    COMMA  shift, and go to state 54
+
+
+State 45
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier OPEN_RND_BKT CLOSE_RND_BKT . OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 55
+
+
+State 46
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT Identifier . CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 56
+
+
+State 47
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier . COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    COMMA  shift, and go to state 57
+
+
+State 48
+
+   11 TypeDeclaration: CLASS Identifier . OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+   12                | CLASS Identifier . EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    EXTENDS        shift, and go to state 58
+    OPEN_CURL_BKT  shift, and go to state 59
+
+
+State 49
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC . VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    VOID  shift, and go to state 60
+
+
+State 50
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA . Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 61
+
+
+State 51
+
+   67 MacroDefStatement: DEF_STMT0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT . MultiStatement CLOSE_CURL_BKT
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 62
+
+
+State 52
+
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT . OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 63
+
+
+State 53
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA . Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 64
+
+
+State 54
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA . Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 65
+
+
+State 55
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT . Expression CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 73
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 56
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT . OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 77
+
+
+State 57
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA . Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 78
+
+
+State 58
+
+   12 TypeDeclaration: CLASS Identifier EXTENDS . Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 79
+
+
+State 59
+
+   11 TypeDeclaration: CLASS Identifier OPEN_CURL_BKT . MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    $default  reduce using rule 7 (MultiVarDeclaration)
+
+    MultiVarDeclaration  go to state 80
+
+
+State 60
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID . MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    MAIN  shift, and go to state 81
+
+
+State 61
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier . COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    COMMA  shift, and go to state 82
+
+
+State 62
+
+   19 MultiStatement: MultiStatement . Statement
+   67 MacroDefStatement: DEF_STMT0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement . CLOSE_CURL_BKT
+
+    PRINT           shift, and go to state 83
+    IF              shift, and go to state 84
+    WHILE           shift, and go to state 85
+    OPEN_CURL_BKT   shift, and go to state 86
+    CLOSE_CURL_BKT  shift, and go to state 87
+    IDENTIFIER      shift, and go to state 17
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 63
+
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT . MultiStatement CLOSE_CURL_BKT
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 90
+
+
+State 64
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier . CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 91
+
+
+State 65
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier . COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    COMMA  shift, and go to state 92
+
+
+State 66
+
+   54 PrimaryExpression: TRUE .
+
+    $default  reduce using rule 54 (PrimaryExpression)
+
+
+State 67
+
+   55 PrimaryExpression: FALSE .
+
+    $default  reduce using rule 55 (PrimaryExpression)
+
+
+State 68
+
+   57 PrimaryExpression: THIS .
+
+    $default  reduce using rule 57 (PrimaryExpression)
+
+
+State 69
+
+   58 PrimaryExpression: NEW . INT OPEN_SQR_BKT Expression CLOSE_SQR_BKT
+   59                  | NEW . Identifier OPEN_RND_BKT CLOSE_RND_BKT
+
+    INT         shift, and go to state 93
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 94
+
+
+State 70
+
+   61 PrimaryExpression: OPEN_RND_BKT . Expression CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 95
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 71
+
+   60 PrimaryExpression: NOT . Expression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 96
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 72
+
+   75 Integer: INTEGER .
+
+    $default  reduce using rule 75 (Integer)
+
+
+State 73
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT Expression . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 97
+
+
+State 74
+
+   40 Expression: PrimaryExpression . LAND PrimaryExpression
+   41           | PrimaryExpression . LOR PrimaryExpression
+   42           | PrimaryExpression . NEQ PrimaryExpression
+   43           | PrimaryExpression . LTE PrimaryExpression
+   44           | PrimaryExpression . PLUS PrimaryExpression
+   45           | PrimaryExpression . MINUS PrimaryExpression
+   46           | PrimaryExpression . MUL PrimaryExpression
+   47           | PrimaryExpression . DIV PrimaryExpression
+   48           | PrimaryExpression . OPEN_SQR_BKT PrimaryExpression CLOSE_SQR_BKT
+   49           | PrimaryExpression . DOT LENGTH
+   50           | PrimaryExpression .
+   51           | PrimaryExpression . DOT Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT
+
+    OPEN_SQR_BKT  shift, and go to state 98
+    DOT           shift, and go to state 99
+    LAND          shift, and go to state 100
+    LOR           shift, and go to state 101
+    NEQ           shift, and go to state 102
+    LTE           shift, and go to state 103
+    PLUS          shift, and go to state 104
+    MINUS         shift, and go to state 105
+    MUL           shift, and go to state 106
+    DIV           shift, and go to state 107
+
+    OPEN_SQR_BKT  [reduce using rule 50 (Expression)]
+    DOT           [reduce using rule 50 (Expression)]
+    LAND          [reduce using rule 50 (Expression)]
+    LOR           [reduce using rule 50 (Expression)]
+    NEQ           [reduce using rule 50 (Expression)]
+    LTE           [reduce using rule 50 (Expression)]
+    PLUS          [reduce using rule 50 (Expression)]
+    MINUS         [reduce using rule 50 (Expression)]
+    MUL           [reduce using rule 50 (Expression)]
+    DIV           [reduce using rule 50 (Expression)]
+    $default      reduce using rule 50 (Expression)
+
+
+State 75
+
+   52 Expression: Identifier . OPEN_RND_BKT ExprList CLOSE_RND_BKT
+   56 PrimaryExpression: Identifier .
+
+    OPEN_RND_BKT  shift, and go to state 108
+
+    $default  reduce using rule 56 (PrimaryExpression)
+
+
+State 76
+
+   53 PrimaryExpression: Integer .
+
+    $default  reduce using rule 53 (PrimaryExpression)
+
+
+State 77
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT . Expression CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 109
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 78
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier . CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 110
+
+
+State 79
+
+   12 TypeDeclaration: CLASS Identifier EXTENDS Identifier . OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 111
+
+
+State 80
+
+    8 MultiVarDeclaration: MultiVarDeclaration . Type Identifier SEMI_COLON
+   11 TypeDeclaration: CLASS Identifier OPEN_CURL_BKT MultiVarDeclaration . MultiMethodDeclaration CLOSE_CURL_BKT
+
+    INT         shift, and go to state 112
+    BOOLEAN     shift, and go to state 113
+    IDENTIFIER  shift, and go to state 17
+
+    $default  reduce using rule 9 (MultiMethodDeclaration)
+
+    MultiMethodDeclaration  go to state 114
+    Type                    go to state 115
+    Identifier              go to state 116
+
+
+State 81
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN . OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 117
+
+
+State 82
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA . IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    IdentifierListNonNull  go to state 118
+    Identifier             go to state 119
+
+
+State 83
+
+   33 Statement: PRINT . OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON
+
+    OPEN_RND_BKT  shift, and go to state 120
+
+
+State 84
+
+   36 Statement: IF . OPEN_RND_BKT Expression CLOSE_RND_BKT Statement
+   37          | IF . OPEN_RND_BKT Expression CLOSE_RND_BKT Statement ELSE Statement
+
+    OPEN_RND_BKT  shift, and go to state 121
+
+
+State 85
+
+   38 Statement: WHILE . OPEN_RND_BKT Expression CLOSE_RND_BKT Statement
+
+    OPEN_RND_BKT  shift, and go to state 122
+
+
+State 86
+
+   32 Statement: OPEN_CURL_BKT . MultiStatement CLOSE_CURL_BKT
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 123
+
+
+State 87
+
+   67 MacroDefStatement: DEF_STMT0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT .
+
+    $default  reduce using rule 67 (MacroDefStatement)
+
+
+State 88
+
+   19 MultiStatement: MultiStatement Statement .
+
+    $default  reduce using rule 19 (MultiStatement)
+
+
+State 89
+
+   34 Statement: Identifier . EQ Expression SEMI_COLON
+   35          | Identifier . OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ Expression SEMI_COLON
+   39          | Identifier . OPEN_RND_BKT ExprList CLOSE_RND_BKT SEMI_COLON
+
+    OPEN_RND_BKT  shift, and go to state 124
+    OPEN_SQR_BKT  shift, and go to state 125
+    EQ            shift, and go to state 126
+
+
+State 90
+
+   19 MultiStatement: MultiStatement . Statement
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement . CLOSE_CURL_BKT
+
+    PRINT           shift, and go to state 83
+    IF              shift, and go to state 84
+    WHILE           shift, and go to state 85
+    OPEN_CURL_BKT   shift, and go to state 86
+    CLOSE_CURL_BKT  shift, and go to state 127
+    IDENTIFIER      shift, and go to state 17
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 91
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT . OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 128
+
+
+State 92
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA . IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    IdentifierListNonNull  go to state 129
+    Identifier             go to state 119
+
+
+State 93
+
+   58 PrimaryExpression: NEW INT . OPEN_SQR_BKT Expression CLOSE_SQR_BKT
+
+    OPEN_SQR_BKT  shift, and go to state 130
+
+
+State 94
+
+   59 PrimaryExpression: NEW Identifier . OPEN_RND_BKT CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 131
+
+
+State 95
+
+   61 PrimaryExpression: OPEN_RND_BKT Expression . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 132
+
+
+State 96
+
+   60 PrimaryExpression: NOT Expression .
+
+    $default  reduce using rule 60 (PrimaryExpression)
+
+
+State 97
+
+   71 MacroDefExpression: DEF_EXPR0 Identifier OPEN_RND_BKT CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT .
+
+    $default  reduce using rule 71 (MacroDefExpression)
+
+
+State 98
+
+   48 Expression: PrimaryExpression OPEN_SQR_BKT . PrimaryExpression CLOSE_SQR_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 133
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 99
+
+   49 Expression: PrimaryExpression DOT . LENGTH
+   51           | PrimaryExpression DOT . Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT
+
+    LENGTH      shift, and go to state 135
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 136
+
+
+State 100
+
+   40 Expression: PrimaryExpression LAND . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 137
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 101
+
+   41 Expression: PrimaryExpression LOR . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 138
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 102
+
+   42 Expression: PrimaryExpression NEQ . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 139
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 103
+
+   43 Expression: PrimaryExpression LTE . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 140
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 104
+
+   44 Expression: PrimaryExpression PLUS . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 141
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 105
+
+   45 Expression: PrimaryExpression MINUS . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 142
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 106
+
+   46 Expression: PrimaryExpression MUL . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 143
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 107
+
+   47 Expression: PrimaryExpression DIV . PrimaryExpression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    PrimaryExpression  go to state 144
+    Identifier         go to state 134
+    Integer            go to state 76
+
+
+State 108
+
+   52 Expression: Identifier OPEN_RND_BKT . ExprList CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    $default  reduce using rule 27 (ExprListNull)
+
+    ExprListNull       go to state 145
+    ExprListNonNull    go to state 146
+    ExprList           go to state 147
+    Expression         go to state 148
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 109
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 149
+
+
+State 110
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT . OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 150
+
+
+State 111
+
+   12 TypeDeclaration: CLASS Identifier EXTENDS Identifier OPEN_CURL_BKT . MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT
+
+    $default  reduce using rule 7 (MultiVarDeclaration)
+
+    MultiVarDeclaration  go to state 151
+
+
+State 112
+
+   23 Type: INT . OPEN_SQR_BKT CLOSE_SQR_BKT
+   25     | INT .
+
+    OPEN_SQR_BKT  shift, and go to state 152
+
+    $default  reduce using rule 25 (Type)
+
+
+State 113
+
+   24 Type: BOOLEAN .
+
+    $default  reduce using rule 24 (Type)
+
+
+State 114
+
+   10 MultiMethodDeclaration: MultiMethodDeclaration . MethodDeclaration
+   11 TypeDeclaration: CLASS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration . CLOSE_CURL_BKT
+
+    PUBLIC          shift, and go to state 153
+    CLOSE_CURL_BKT  shift, and go to state 154
+
+    MethodDeclaration  go to state 155
+
+
+State 115
+
+    8 MultiVarDeclaration: MultiVarDeclaration Type . Identifier SEMI_COLON
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 156
+
+
+State 116
+
+   26 Type: Identifier .
+
+    $default  reduce using rule 26 (Type)
+
+
+State 117
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT . STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    STRING  shift, and go to state 157
+
+
+State 118
+
+   63 IdentifierListNonNull: IdentifierListNonNull . COMMA Identifier
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull . CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 158
+    COMMA          shift, and go to state 159
+
+
+State 119
+
+   62 IdentifierListNonNull: Identifier .
+
+    $default  reduce using rule 62 (IdentifierListNonNull)
+
+
+State 120
+
+   33 Statement: PRINT OPEN_RND_BKT . Expression CLOSE_RND_BKT SEMI_COLON
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 160
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 121
+
+   36 Statement: IF OPEN_RND_BKT . Expression CLOSE_RND_BKT Statement
+   37          | IF OPEN_RND_BKT . Expression CLOSE_RND_BKT Statement ELSE Statement
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 161
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 122
+
+   38 Statement: WHILE OPEN_RND_BKT . Expression CLOSE_RND_BKT Statement
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 162
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 123
+
+   19 MultiStatement: MultiStatement . Statement
+   32 Statement: OPEN_CURL_BKT MultiStatement . CLOSE_CURL_BKT
+
+    PRINT           shift, and go to state 83
+    IF              shift, and go to state 84
+    WHILE           shift, and go to state 85
+    OPEN_CURL_BKT   shift, and go to state 86
+    CLOSE_CURL_BKT  shift, and go to state 163
+    IDENTIFIER      shift, and go to state 17
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 124
+
+   39 Statement: Identifier OPEN_RND_BKT . ExprList CLOSE_RND_BKT SEMI_COLON
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    $default  reduce using rule 27 (ExprListNull)
+
+    ExprListNull       go to state 145
+    ExprListNonNull    go to state 146
+    ExprList           go to state 164
+    Expression         go to state 148
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 125
+
+   35 Statement: Identifier OPEN_SQR_BKT . Expression CLOSE_SQR_BKT EQ Expression SEMI_COLON
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 165
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 126
+
+   34 Statement: Identifier EQ . Expression SEMI_COLON
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 166
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 127
+
+   68 MacroDefStatement: DEF_STMT1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT .
+
+    $default  reduce using rule 68 (MacroDefStatement)
+
+
+State 128
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT . MultiStatement CLOSE_CURL_BKT
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 167
+
+
+State 129
+
+   63 IdentifierListNonNull: IdentifierListNonNull . COMMA Identifier
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull . CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 168
+    COMMA          shift, and go to state 159
+
+
+State 130
+
+   58 PrimaryExpression: NEW INT OPEN_SQR_BKT . Expression CLOSE_SQR_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 169
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 131
+
+   59 PrimaryExpression: NEW Identifier OPEN_RND_BKT . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 170
+
+
+State 132
+
+   61 PrimaryExpression: OPEN_RND_BKT Expression CLOSE_RND_BKT .
+
+    $default  reduce using rule 61 (PrimaryExpression)
+
+
+State 133
+
+   48 Expression: PrimaryExpression OPEN_SQR_BKT PrimaryExpression . CLOSE_SQR_BKT
+
+    CLOSE_SQR_BKT  shift, and go to state 171
+
+
+State 134
+
+   56 PrimaryExpression: Identifier .
+
+    $default  reduce using rule 56 (PrimaryExpression)
+
+
+State 135
+
+   49 Expression: PrimaryExpression DOT LENGTH .
+
+    $default  reduce using rule 49 (Expression)
+
+
+State 136
+
+   51 Expression: PrimaryExpression DOT Identifier . OPEN_RND_BKT ExprList CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 172
+
+
+State 137
+
+   40 Expression: PrimaryExpression LAND PrimaryExpression .
+
+    $default  reduce using rule 40 (Expression)
+
+
+State 138
+
+   41 Expression: PrimaryExpression LOR PrimaryExpression .
+
+    $default  reduce using rule 41 (Expression)
+
+
+State 139
+
+   42 Expression: PrimaryExpression NEQ PrimaryExpression .
+
+    $default  reduce using rule 42 (Expression)
+
+
+State 140
+
+   43 Expression: PrimaryExpression LTE PrimaryExpression .
+
+    $default  reduce using rule 43 (Expression)
+
+
+State 141
+
+   44 Expression: PrimaryExpression PLUS PrimaryExpression .
+
+    $default  reduce using rule 44 (Expression)
+
+
+State 142
+
+   45 Expression: PrimaryExpression MINUS PrimaryExpression .
+
+    $default  reduce using rule 45 (Expression)
+
+
+State 143
+
+   46 Expression: PrimaryExpression MUL PrimaryExpression .
+
+    $default  reduce using rule 46 (Expression)
+
+
+State 144
+
+   47 Expression: PrimaryExpression DIV PrimaryExpression .
+
+    $default  reduce using rule 47 (Expression)
+
+
+State 145
+
+   30 ExprList: ExprListNull .
+
+    $default  reduce using rule 30 (ExprList)
+
+
+State 146
+
+   29 ExprListNonNull: ExprListNonNull . COMMA Expression
+   31 ExprList: ExprListNonNull .
+
+    COMMA  shift, and go to state 173
+
+    $default  reduce using rule 31 (ExprList)
+
+
+State 147
+
+   52 Expression: Identifier OPEN_RND_BKT ExprList . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 174
+
+
+State 148
+
+   28 ExprListNonNull: Expression .
+
+    $default  reduce using rule 28 (ExprListNonNull)
+
+
+State 149
+
+   72 MacroDefExpression: DEF_EXPR1 Identifier OPEN_RND_BKT Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT .
+
+    $default  reduce using rule 72 (MacroDefExpression)
+
+
+State 150
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT . Expression CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 175
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 151
+
+    8 MultiVarDeclaration: MultiVarDeclaration . Type Identifier SEMI_COLON
+   12 TypeDeclaration: CLASS Identifier EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration . MultiMethodDeclaration CLOSE_CURL_BKT
+
+    INT         shift, and go to state 112
+    BOOLEAN     shift, and go to state 113
+    IDENTIFIER  shift, and go to state 17
+
+    $default  reduce using rule 9 (MultiMethodDeclaration)
+
+    MultiMethodDeclaration  go to state 176
+    Type                    go to state 115
+    Identifier              go to state 116
+
+
+State 152
+
+   23 Type: INT OPEN_SQR_BKT . CLOSE_SQR_BKT
+
+    CLOSE_SQR_BKT  shift, and go to state 177
+
+
+State 153
+
+   20 MethodDeclaration: PUBLIC . Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    INT         shift, and go to state 112
+    BOOLEAN     shift, and go to state 113
+    IDENTIFIER  shift, and go to state 17
+
+    Type        go to state 178
+    Identifier  go to state 116
+
+
+State 154
+
+   11 TypeDeclaration: CLASS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT .
+
+    $default  reduce using rule 11 (TypeDeclaration)
+
+
+State 155
+
+   10 MultiMethodDeclaration: MultiMethodDeclaration MethodDeclaration .
+
+    $default  reduce using rule 10 (MultiMethodDeclaration)
+
+
+State 156
+
+    8 MultiVarDeclaration: MultiVarDeclaration Type Identifier . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 179
+
+
+State 157
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING . OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    OPEN_SQR_BKT  shift, and go to state 180
+
+
+State 158
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT . OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 181
+
+
+State 159
+
+   63 IdentifierListNonNull: IdentifierListNonNull COMMA . Identifier
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 182
+
+
+State 160
+
+   33 Statement: PRINT OPEN_RND_BKT Expression . CLOSE_RND_BKT SEMI_COLON
+
+    CLOSE_RND_BKT  shift, and go to state 183
+
+
+State 161
+
+   36 Statement: IF OPEN_RND_BKT Expression . CLOSE_RND_BKT Statement
+   37          | IF OPEN_RND_BKT Expression . CLOSE_RND_BKT Statement ELSE Statement
+
+    CLOSE_RND_BKT  shift, and go to state 184
+
+
+State 162
+
+   38 Statement: WHILE OPEN_RND_BKT Expression . CLOSE_RND_BKT Statement
+
+    CLOSE_RND_BKT  shift, and go to state 185
+
+
+State 163
+
+   32 Statement: OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT .
+
+    $default  reduce using rule 32 (Statement)
+
+
+State 164
+
+   39 Statement: Identifier OPEN_RND_BKT ExprList . CLOSE_RND_BKT SEMI_COLON
+
+    CLOSE_RND_BKT  shift, and go to state 186
+
+
+State 165
+
+   35 Statement: Identifier OPEN_SQR_BKT Expression . CLOSE_SQR_BKT EQ Expression SEMI_COLON
+
+    CLOSE_SQR_BKT  shift, and go to state 187
+
+
+State 166
+
+   34 Statement: Identifier EQ Expression . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 188
+
+
+State 167
+
+   19 MultiStatement: MultiStatement . Statement
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement . CLOSE_CURL_BKT
+
+    PRINT           shift, and go to state 83
+    IF              shift, and go to state 84
+    WHILE           shift, and go to state 85
+    OPEN_CURL_BKT   shift, and go to state 86
+    CLOSE_CURL_BKT  shift, and go to state 189
+    IDENTIFIER      shift, and go to state 17
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 168
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT . OPEN_RND_BKT Expression CLOSE_RND_BKT
+
+    OPEN_RND_BKT  shift, and go to state 190
+
+
+State 169
+
+   58 PrimaryExpression: NEW INT OPEN_SQR_BKT Expression . CLOSE_SQR_BKT
+
+    CLOSE_SQR_BKT  shift, and go to state 191
+
+
+State 170
+
+   59 PrimaryExpression: NEW Identifier OPEN_RND_BKT CLOSE_RND_BKT .
+
+    $default  reduce using rule 59 (PrimaryExpression)
+
+
+State 171
+
+   48 Expression: PrimaryExpression OPEN_SQR_BKT PrimaryExpression CLOSE_SQR_BKT .
+
+    $default  reduce using rule 48 (Expression)
+
+
+State 172
+
+   51 Expression: PrimaryExpression DOT Identifier OPEN_RND_BKT . ExprList CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    $default  reduce using rule 27 (ExprListNull)
+
+    ExprListNull       go to state 145
+    ExprListNonNull    go to state 146
+    ExprList           go to state 192
+    Expression         go to state 148
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 173
+
+   29 ExprListNonNull: ExprListNonNull COMMA . Expression
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 193
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 174
+
+   52 Expression: Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT .
+
+    $default  reduce using rule 52 (Expression)
+
+
+State 175
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 194
+
+
+State 176
+
+   10 MultiMethodDeclaration: MultiMethodDeclaration . MethodDeclaration
+   12 TypeDeclaration: CLASS Identifier EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration . CLOSE_CURL_BKT
+
+    PUBLIC          shift, and go to state 153
+    CLOSE_CURL_BKT  shift, and go to state 195
+
+    MethodDeclaration  go to state 155
+
+
+State 177
+
+   23 Type: INT OPEN_SQR_BKT CLOSE_SQR_BKT .
+
+    $default  reduce using rule 23 (Type)
+
+
+State 178
+
+   20 MethodDeclaration: PUBLIC Type . Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 196
+
+
+State 179
+
+    8 MultiVarDeclaration: MultiVarDeclaration Type Identifier SEMI_COLON .
+
+    $default  reduce using rule 8 (MultiVarDeclaration)
+
+
+State 180
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT . CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    CLOSE_SQR_BKT  shift, and go to state 197
+
+
+State 181
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT . MultiStatement CLOSE_CURL_BKT
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 198
+
+
+State 182
+
+   63 IdentifierListNonNull: IdentifierListNonNull COMMA Identifier .
+
+    $default  reduce using rule 63 (IdentifierListNonNull)
+
+
+State 183
+
+   33 Statement: PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 199
+
+
+State 184
+
+   36 Statement: IF OPEN_RND_BKT Expression CLOSE_RND_BKT . Statement
+   37          | IF OPEN_RND_BKT Expression CLOSE_RND_BKT . Statement ELSE Statement
+
+    PRINT          shift, and go to state 83
+    IF             shift, and go to state 84
+    WHILE          shift, and go to state 85
+    OPEN_CURL_BKT  shift, and go to state 86
+    IDENTIFIER     shift, and go to state 17
+
+    Statement   go to state 200
+    Identifier  go to state 89
+
+
+State 185
+
+   38 Statement: WHILE OPEN_RND_BKT Expression CLOSE_RND_BKT . Statement
+
+    PRINT          shift, and go to state 83
+    IF             shift, and go to state 84
+    WHILE          shift, and go to state 85
+    OPEN_CURL_BKT  shift, and go to state 86
+    IDENTIFIER     shift, and go to state 17
+
+    Statement   go to state 201
+    Identifier  go to state 89
+
+
+State 186
+
+   39 Statement: Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 202
+
+
+State 187
+
+   35 Statement: Identifier OPEN_SQR_BKT Expression CLOSE_SQR_BKT . EQ Expression SEMI_COLON
+
+    EQ  shift, and go to state 203
+
+
+State 188
+
+   34 Statement: Identifier EQ Expression SEMI_COLON .
+
+    $default  reduce using rule 34 (Statement)
+
+
+State 189
+
+   69 MacroDefStatement: DEF_STMT2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT .
+
+    $default  reduce using rule 69 (MacroDefStatement)
+
+
+State 190
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT . Expression CLOSE_RND_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 204
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 191
+
+   58 PrimaryExpression: NEW INT OPEN_SQR_BKT Expression CLOSE_SQR_BKT .
+
+    $default  reduce using rule 58 (PrimaryExpression)
+
+
+State 192
+
+   51 Expression: PrimaryExpression DOT Identifier OPEN_RND_BKT ExprList . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 205
+
+
+State 193
+
+   29 ExprListNonNull: ExprListNonNull COMMA Expression .
+
+    $default  reduce using rule 29 (ExprListNonNull)
+
+
+State 194
+
+   73 MacroDefExpression: DEF_EXPR2 Identifier OPEN_RND_BKT Identifier COMMA Identifier CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT .
+
+    $default  reduce using rule 73 (MacroDefExpression)
+
+
+State 195
+
+   12 TypeDeclaration: CLASS Identifier EXTENDS Identifier OPEN_CURL_BKT MultiVarDeclaration MultiMethodDeclaration CLOSE_CURL_BKT .
+
+    $default  reduce using rule 12 (TypeDeclaration)
+
+
+State 196
+
+   20 MethodDeclaration: PUBLIC Type Identifier . OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 206
+
+
+State 197
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT . Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 207
+
+
+State 198
+
+   19 MultiStatement: MultiStatement . Statement
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement . CLOSE_CURL_BKT
+
+    PRINT           shift, and go to state 83
+    IF              shift, and go to state 84
+    WHILE           shift, and go to state 85
+    OPEN_CURL_BKT   shift, and go to state 86
+    CLOSE_CURL_BKT  shift, and go to state 208
+    IDENTIFIER      shift, and go to state 17
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 199
+
+   33 Statement: PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON .
+
+    $default  reduce using rule 33 (Statement)
+
+
+State 200
+
+   36 Statement: IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement .
+   37          | IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement . ELSE Statement
+
+    ELSE  shift, and go to state 209
+
+    ELSE      [reduce using rule 36 (Statement)]
+    $default  reduce using rule 36 (Statement)
+
+
+State 201
+
+   38 Statement: WHILE OPEN_RND_BKT Expression CLOSE_RND_BKT Statement .
+
+    $default  reduce using rule 38 (Statement)
+
+
+State 202
+
+   39 Statement: Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT SEMI_COLON .
+
+    $default  reduce using rule 39 (Statement)
+
+
+State 203
+
+   35 Statement: Identifier OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ . Expression SEMI_COLON
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 210
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 204
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression . CLOSE_RND_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 211
+
+
+State 205
+
+   51 Expression: PrimaryExpression DOT Identifier OPEN_RND_BKT ExprList CLOSE_RND_BKT .
+
+    $default  reduce using rule 51 (Expression)
+
+
+State 206
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT . MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    INT         shift, and go to state 112
+    BOOLEAN     shift, and go to state 113
+    IDENTIFIER  shift, and go to state 17
+
+    $default  reduce using rule 13 (MethodArgNull)
+
+    MethodArgNull     go to state 212
+    MethodArgNonNull  go to state 213
+    MethodArg         go to state 214
+    Type              go to state 215
+    Identifier        go to state 116
+
+
+State 207
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier . CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 216
+
+
+State 208
+
+   66 MacroDefStatement: DEF_STMT Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_CURL_BKT MultiStatement CLOSE_CURL_BKT .
+
+    $default  reduce using rule 66 (MacroDefStatement)
+
+
+State 209
+
+   37 Statement: IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement ELSE . Statement
+
+    PRINT          shift, and go to state 83
+    IF             shift, and go to state 84
+    WHILE          shift, and go to state 85
+    OPEN_CURL_BKT  shift, and go to state 86
+    IDENTIFIER     shift, and go to state 17
+
+    Statement   go to state 217
+    Identifier  go to state 89
+
+
+State 210
+
+   35 Statement: Identifier OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ Expression . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 218
+
+
+State 211
+
+   70 MacroDefExpression: DEF_EXPR Identifier OPEN_RND_BKT Identifier COMMA Identifier COMMA IdentifierListNonNull CLOSE_RND_BKT OPEN_RND_BKT Expression CLOSE_RND_BKT .
+
+    $default  reduce using rule 70 (MacroDefExpression)
+
+
+State 212
+
+   16 MethodArg: MethodArgNull .
+
+    $default  reduce using rule 16 (MethodArg)
+
+
+State 213
+
+   15 MethodArgNonNull: MethodArgNonNull . COMMA Type Identifier
+   17 MethodArg: MethodArgNonNull .
+
+    COMMA  shift, and go to state 219
+
+    $default  reduce using rule 17 (MethodArg)
+
+
+State 214
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg . CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 220
+
+
+State 215
+
+   14 MethodArgNonNull: Type . Identifier
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 221
+
+
+State 216
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT . OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 222
+
+
+State 217
+
+   37 Statement: IF OPEN_RND_BKT Expression CLOSE_RND_BKT Statement ELSE Statement .
+
+    $default  reduce using rule 37 (Statement)
+
+
+State 218
+
+   35 Statement: Identifier OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ Expression SEMI_COLON .
+
+    $default  reduce using rule 35 (Statement)
+
+
+State 219
+
+   15 MethodArgNonNull: MethodArgNonNull COMMA . Type Identifier
+
+    INT         shift, and go to state 112
+    BOOLEAN     shift, and go to state 113
+    IDENTIFIER  shift, and go to state 17
+
+    Type        go to state 223
+    Identifier  go to state 116
+
+
+State 220
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT . OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    OPEN_CURL_BKT  shift, and go to state 224
+
+
+State 221
+
+   14 MethodArgNonNull: Type Identifier .
+
+    $default  reduce using rule 14 (MethodArgNonNull)
+
+
+State 222
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT . PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    PRINT  shift, and go to state 225
+
+
+State 223
+
+   15 MethodArgNonNull: MethodArgNonNull COMMA Type . Identifier
+
+    IDENTIFIER  shift, and go to state 17
+
+    Identifier  go to state 226
+
+
+State 224
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT . MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    $default  reduce using rule 7 (MultiVarDeclaration)
+
+    MultiVarDeclaration  go to state 227
+    MethodBody           go to state 228
+
+
+State 225
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT . OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    OPEN_RND_BKT  shift, and go to state 229
+
+
+State 226
+
+   15 MethodArgNonNull: MethodArgNonNull COMMA Type Identifier .
+
+    $default  reduce using rule 15 (MethodArgNonNull)
+
+
+State 227
+
+    8 MultiVarDeclaration: MultiVarDeclaration . Type Identifier SEMI_COLON
+   21 MethodBody: MultiVarDeclaration .
+   22           | MultiVarDeclaration . Statement MultiStatement
+
+    PRINT          shift, and go to state 83
+    INT            shift, and go to state 112
+    BOOLEAN        shift, and go to state 113
+    IF             shift, and go to state 84
+    WHILE          shift, and go to state 85
+    OPEN_CURL_BKT  shift, and go to state 86
+    IDENTIFIER     shift, and go to state 17
+
+    $default  reduce using rule 21 (MethodBody)
+
+    Type        go to state 115
+    Statement   go to state 230
+    Identifier  go to state 231
+
+
+State 228
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody . RETURN Expression SEMI_COLON CLOSE_CURL_BKT
+
+    RETURN  shift, and go to state 232
+
+
+State 229
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT . Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 233
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 230
+
+   22 MethodBody: MultiVarDeclaration Statement . MultiStatement
+
+    $default  reduce using rule 18 (MultiStatement)
+
+    MultiStatement  go to state 234
+
+
+State 231
+
+   26 Type: Identifier .
+   34 Statement: Identifier . EQ Expression SEMI_COLON
+   35          | Identifier . OPEN_SQR_BKT Expression CLOSE_SQR_BKT EQ Expression SEMI_COLON
+   39          | Identifier . OPEN_RND_BKT ExprList CLOSE_RND_BKT SEMI_COLON
+
+    OPEN_RND_BKT  shift, and go to state 124
+    OPEN_SQR_BKT  shift, and go to state 125
+    EQ            shift, and go to state 126
+
+    $default  reduce using rule 26 (Type)
+
+
+State 232
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN . Expression SEMI_COLON CLOSE_CURL_BKT
+
+    TRUE          shift, and go to state 66
+    FALSE         shift, and go to state 67
+    THIS          shift, and go to state 68
+    NEW           shift, and go to state 69
+    OPEN_RND_BKT  shift, and go to state 70
+    NOT           shift, and go to state 71
+    IDENTIFIER    shift, and go to state 17
+    INTEGER       shift, and go to state 72
+
+    Expression         go to state 235
+    PrimaryExpression  go to state 74
+    Identifier         go to state 75
+    Integer            go to state 76
+
+
+State 233
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression . CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    CLOSE_RND_BKT  shift, and go to state 236
+
+
+State 234
+
+   19 MultiStatement: MultiStatement . Statement
+   22 MethodBody: MultiVarDeclaration Statement MultiStatement .
+
+    PRINT          shift, and go to state 83
+    IF             shift, and go to state 84
+    WHILE          shift, and go to state 85
+    OPEN_CURL_BKT  shift, and go to state 86
+    IDENTIFIER     shift, and go to state 17
+
+    $default  reduce using rule 22 (MethodBody)
+
+    Statement   go to state 88
+    Identifier  go to state 89
+
+
+State 235
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression . SEMI_COLON CLOSE_CURL_BKT
+
+    SEMI_COLON  shift, and go to state 237
+
+
+State 236
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT . SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    SEMI_COLON  shift, and go to state 238
+
+
+State 237
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON . CLOSE_CURL_BKT
+
+    CLOSE_CURL_BKT  shift, and go to state 239
+
+
+State 238
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON . CLOSE_CURL_BKT CLOSE_CURL_BKT
+
+    CLOSE_CURL_BKT  shift, and go to state 240
+
+
+State 239
+
+   20 MethodDeclaration: PUBLIC Type Identifier OPEN_RND_BKT MethodArg CLOSE_RND_BKT OPEN_CURL_BKT MethodBody RETURN Expression SEMI_COLON CLOSE_CURL_BKT .
+
+    $default  reduce using rule 20 (MethodDeclaration)
+
+
+State 240
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT . CLOSE_CURL_BKT
+
+    CLOSE_CURL_BKT  shift, and go to state 241
+
+
+State 241
+
+    6 MainClass: CLASS Identifier OPEN_CURL_BKT PUBLIC STATIC VOID MAIN OPEN_RND_BKT STRING OPEN_SQR_BKT CLOSE_SQR_BKT Identifier CLOSE_RND_BKT OPEN_CURL_BKT PRINT OPEN_RND_BKT Expression CLOSE_RND_BKT SEMI_COLON CLOSE_CURL_BKT CLOSE_CURL_BKT .
+
+    $default  reduce using rule 6 (MainClass)
